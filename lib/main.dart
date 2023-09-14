@@ -19,12 +19,10 @@ class _MyAppState extends State<MyApp> {
 
   void addContact() {}
 
-  void deleteContact() {
-    if (contacts.isNotEmpty) {
-      setState(() {
-        contacts.removeLast();
-      });
-    }
+  void deleteContact(Contact contact) {
+    setState(() {
+      contacts.remove(contact);
+    });
   }
 
   @override
@@ -128,6 +126,16 @@ class _MyAppState extends State<MyApp> {
                       child: Column(
                         children: [
                           ListTile(
+                            trailing: InkWell(
+                              child: IconButton(
+                                  onPressed: () {
+                                    deleteContact(contact);
+                                  },
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  )),
+                            ),
                             title: Text(
                               contact.name,
                               style: const TextStyle(
@@ -143,12 +151,6 @@ class _MyAppState extends State<MyApp> {
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
-                          IconButton(
-                              onPressed: deleteContact,
-                              icon: const Icon(
-                                Icons.delete,
-                                color: Colors.red,
-                              )),
                         ],
                       ),
                     ),
